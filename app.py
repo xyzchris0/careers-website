@@ -29,14 +29,13 @@ def hello_world():
                            jobs=JOBS,
                           company_name='Cybersecurity Careers')
 
-
-
-
-
-
 @app.route("/api/jobs")
 def list_jobs():
   return jsonify(JOBS)
+
+@app.route("/roadmap")
+def roadmap():
+  return render_template('roadmap.html')
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', debug=True)
