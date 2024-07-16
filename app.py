@@ -5,8 +5,8 @@ app = Flask(__name__)
 
 API_URL = "https://data.usajobs.gov/api/search"
 HOST = "data.usajobs.gov"
-USER_AGENT = "c0568654@gmail.com"
-AUTH_KEY = "UhNzjD1kIU6Foz6SMPyQFkntzqzetACc66gSr4+2sxM="
+USER_AGENT = "Test"
+AUTH_KEY = "Test"
 
 JOBS = [
     {
