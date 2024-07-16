@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: go-remote-cyber
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app"
+    plan: free
+    envVars:
+      - key: FLASK_ENV
+        value: production
+
+jobs:
+  - name: daily-job-scraper
+    env: python
+    schedule: "0 0 * * *"
+    command: "python app.py"

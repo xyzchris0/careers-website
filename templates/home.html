@@ -10,30 +10,28 @@
         font-size: 40px;
         font-family: Roboto; 
         font-weight: normal;
-        color: rgb(50, 50, 50)
+        color: rgb(50, 50, 50);
         text-align: center;
       }
       #banner {
         width: 100%; 
-        height: 360;
+        height: 360px;
         object-fit: cover;
       }
       h2 {
         font-family: Roboto;
         font-size: 32px;
-        color: rgb(100, 100, 100)
+        color: rgb(100, 100, 100);
         text-align: center;
         font-weight: normal;
       }
       p {
         font-family: Roboto;
         color: rgb(80, 80, 80);
-        
       }
       #container {
         max-width: 720px;
-        margin: 0, auto, 0 auto;
-        
+        margin: 0 auto;
       }
     </style>
   </head>
@@ -41,20 +39,60 @@
     {% include 'nav.html' %}
     <div class="container">
       <h1 class="text-center mt-2 mb-4">
-        {{company_name}} Remote Job Posting
+        {{ company_name }} Remote Job Posting
       </h1>
       <img id="banner" src="https://c3f885b8-02d3-4b26-85fc-97bba4c16c96-00-u2p45xryfpgi.riker.replit.dev/static/Careersimg.jpg">
       <h2 class="text-center"> About (G)o (R)emote (C)ybersecurity</h2>
       <p class="lead">
-This site is still under construction and will provide live data soon. Thank you for stopping by      </p>
-      <h2 class="text-center mt-2 mb-4">Job Openings (Dummy Data)</h2>
-      <p>
-        {% for job in jobs %}
-          {% include 'jobitem.html' %}
-        {% endfor %}
+        This site is still under construction and will provide live data soon. Thank you for stopping by.
       </p>
+      <h2 class="text-center mt-2 mb-4"> (Dummy Data)</h2>
+      <div>
+        <div class="job-item mb-4">
+          <h3>Data Analyst</h3>
+          <p><strong>Organization:</strong> ABC Corp</p>
+          <p><strong>Location:</strong> Washington, D.C.</p>
+          <p><strong>Description:</strong> Analyze data to support business decisions.</p>
+          <a href="#" class="btn btn-primary">Apply Now</a>
+        </div>
+        <div class="job-item mb-4">
+          <h3>CyberSecurity Analyst</h3>
+          <p><strong>Organization:</strong> XYZ Security</p>
+          <p><strong>Location:</strong> Washington, D.C.</p>
+          <p><strong>Description:</strong> Monitor and protect network systems.</p>
+          <a href="#" class="btn btn-primary">Apply Now</a>
+        </div>
+        <div class="job-item mb-4">
+          <h3>Security Engineer</h3>
+          <p><strong>Organization:</strong> SecureTech</p>
+          <p><strong>Location:</strong> Washington, D.C.</p>
+          <p><strong>Description:</strong> Design and implement security solutions.</p>
+          <a href="#" class="btn btn-primary">Apply Now</a>
+        </div>
+      </div>
+        <h2 class="text-center mt-2 mb-4">Open Remote Cybersecurity Roles</h2>
+        <div>
+          {% for job in jobs %}
+            {% if 'MatchedObjectDescriptor' in job %}
+              <div class="job-item mb-4">
+                <h3>{{ job['MatchedObjectDescriptor']['PositionTitle'] }}</h3>
+                <p><strong>Organization:</strong> {{ job['MatchedObjectDescriptor']['OrganizationName'] }}</p>
+                {% if 'PositionLocation' in job['MatchedObjectDescriptor'] %}
+                  <p><strong>Location:</strong> {{ job['MatchedObjectDescriptor']['PositionLocation'][0]['LocationName'] }}</p>
+                {% endif %}
+                {% if 'UserArea' in job['MatchedObjectDescriptor'] and 'Details' in job['MatchedObjectDescriptor']['UserArea'] %}
+                  <p><strong>Description:</strong> {{ job['MatchedObjectDescriptor']['UserArea']['Details']['JobSummary'] }}</p>
+                {% endif %}
+                {% if 'ApplyURI' in job['MatchedObjectDescriptor'] %}
+                  <a href="{{ job['MatchedObjectDescriptor']['ApplyURI'][0] }}" target="_blank" class="btn btn-primary">Apply Now</a>
+                {% endif %}
+              </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
       <div class="text-center">
-      <a href="mailto:hello@goremotecybersecurity?subject=RemoteCarrersfor" class="btn btn-primary btn-lg">Contact Us</a>
+        <a href="mailto:hello@goremotecybersecurity?subject=RemoteCarrersfor" class="btn btn-primary btn-lg">Contact Us</a>
       </div>
     </div>
     {% include 'footer.html' %}

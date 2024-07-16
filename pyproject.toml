@@ -9,6 +9,7 @@ packages = [{include = "repl_nix_careers_website"}]
 [tool.poetry.dependencies]
 python = "^3.12"
 flask = "^3.0.3"
+requests = "^2.32.3"
 
 
 [build-system]
