@@ -7,19 +7,19 @@
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="#">Home</a>
+          <a class="nav-link active" aria-current="page" href="{{ url_for('home')}}">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{ url_for('roadmap')}}">RoadMap</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://goremotecybersecurity/Job Landscape">Job Landscape</a>
+          <a class="nav-link" href="{{ url_for('joblandscape')}}">Job Landscape</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://goremotecybersecurity/BestCertifications">Best Certifications</a>
+          <a class="nav-link" href="{{ url_for('bestcertifications')}}">Best Certifications</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="https://goremotecybersecurity/About">About</a>
+          <a class="nav-link" href="{{ url_for('about')}}">About</a>
         </li>
         
             </a>
