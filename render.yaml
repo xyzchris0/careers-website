@@ -9,18 +9,18 @@ services:
       - key: FLASK_ENV
         value: production
       - key: USER_AGENT
-        value: ${{ USER_AGENT }}
+        value: ${{ env.USER_AGENT }}
       - key: AUTH_KEY
-        value: ${{ AUTH_KEY }}
+        value: ${{ env.AUTH_KEY }}
 
 jobs:
   - type: cron
     name: daily-job-scraper
     env: python
     schedule: "0 6 * * *"
-    command: "python crawler.py"
+    command: "python crawl.py"
     envVars:
       - key: USER_AGENT
-        value: ${{ USER_AGENT }}
+        value: ${{ env.USER_AGENT }}
       - key: AUTH_KEY
-        value: ${{ AUTH_KEY }}
+        value: ${{ env.AUTH_KEY }}

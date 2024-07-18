@@ -1,65 +1,27 @@
 from flask import Flask, render_template, jsonify
-import requests
 import os
-from dotenv import load_dotenv 
+import json
 
 app = Flask(__name__)
 
-API_URL = "https://data.usajobs.gov/api/search"
-HOST = "data.usajobs.gov"
-USER_AGENT = os.environ.get("USER_AGENT") #Load from variables 
-AUTH_KEY = os.environ.get("AUTH_KEY") #Load from variables 
-
-JOBS = [
-    {
-        'id': 1,
-        'title': 'Data Analyst',
-        'location': 'Washington, D.C.',
-        'salary': '$100,000',
-    },
-    {
-        'id': 2,
-        'title': 'CyberSecurity Analyst',
-        'location': 'Washington, D.C.',
-        'salary': '$140,000',
-    },
-    {
-        'id': 3,
-        'title': 'Security Engineer',
-        'location': 'Washington, D.C.',
-        'salary': '$110,000',
-    }
-]
-
-def fetch_jobs():
-    headers = {
-        "Host": HOST,
-        "User-Agent": USER_AGENT,
-        "Authorization-Key": AUTH_KEY
-    }
-    params = {
-        "JobCategoryCode": "2210",
-        "Keyword": "Remote"
-    }
-    response = requests.get(API_URL, headers=headers, params=params)
-    if response.status_code == 200:
-        data = response.json()
-        print("API response:", data)  # Debug print statement
-        return data
+def load_jobs():
+    if os.path.exists('jobs.json'):
+        with open('jobs.json', 'r') as f:
+            jobs = json.load(f)
+        print("Jobs loaded:", jobs)  # Debug print statement
+        return jobs
     else:
-        print("Failed to fetch jobs:", response.status_code, response.text)
-        return {"SearchResult": {"SearchResultItems": []}}
+        print("jobs.json file not found")
+        return []
 
 @app.route("/")
 def home():
-    job_data = fetch_jobs()
-    jobs = job_data.get('SearchResult', {}).get('SearchResultItems', [])
-    print("Jobs data:", jobs)  # Debug print statement
+    jobs = load_jobs()
     return render_template('home.html', company_name="Go Remote Cyber", jobs=jobs)
 
 @app.route("/api/jobs")
 def list_jobs():
-    return jsonify(fetch_jobs())
+    return jsonify(load_jobs())
 
 @app.route("/roadmap")
 def roadmap():
