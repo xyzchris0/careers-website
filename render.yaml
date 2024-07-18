@@ -3,14 +3,24 @@ services:
     name: go-remote-cyber
     env: python
     buildCommand: "pip install -r requirements.txt"
-    startCommand: "gunicorn app:app"
+    startCommand: "gunicorn -w 4 -b 0.0.0.0:10000 app:app"
     plan: free
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: USER_AGENT
+        value: ${{ USER_AGENT }}
+      - key: AUTH_KEY
+        value: ${{ AUTH_KEY }}
 
 jobs:
-  - name: daily-job-scraper
+  - type: cron
+    name: daily-job-scraper
     env: python
-    schedule: "0 0 * * *"
-    command: "python app.py"
+    schedule: "0 6 * * *"
+    command: "python crawler.py"
+    envVars:
+      - key: USER_AGENT
+        value: ${{ USER_AGENT }}
+      - key: AUTH_KEY
+        value: ${{ AUTH_KEY }}
